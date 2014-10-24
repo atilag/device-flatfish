@@ -4,8 +4,17 @@
 #
 include device/allwinner/common/BoardConfigCommon.mk
 
-BOARD_KERNEL_CMDLINE += ion_reserve=295M
-BOARD_KERNEL_CMDLINE += vmalloc=320M
+TARGET_ARCH_VARIANT_CPU := cortex-a9
+TARGET_CPU_VARIANT := cortex-a9
+ARCH_ARM_HAVE_NEON := true
+
+BOARD_KERNEL_BASE = 0x40000000
+BOARD_KERNEL_CMDLINE += console=ttyS0,115200
+BOARD_KERNEL_CMDLINE += rw
+BOARD_KERNEL_CMDLINE += init=/init
+BOARD_KERNEL_CMDLINE += androidboot.hardware=flatfish
+BOARD_KERNEL_CMDLINE += ion_reserve=256M
+BOARD_KERNEL_CMDLINE += loglevel=7
 
 #b2g
 GECKO_CONFIGURE_ARGS := --disable-b2g-ril
@@ -20,8 +29,10 @@ SYSTEM_LOCATION       := /dev/block/mmcblk0p7
 TARGET_BOARD_PLATFORM := flatfish
 
 TARGET_NO_BOOTLOADER := true
-TARGET_NO_RECOVERY := true
-TARGET_NO_KERNEL := true
+TARGET_NO_RECOVERY := false
+TARGET_NO_KERNEL := false
+
+TARGET_PROVIDES_INIT_RC = true
 
 TARGET_USERIMAGES_USE_EXT4 := true
 BOARD_FLASH_BLOCK_SIZE := 4096
